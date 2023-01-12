@@ -1,0 +1,396 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tedds.ExprInterop</name>
+    </assembly>
+    <members>
+        <member name="T:Tekla.Structural.ExpressoAddIn.Requirement">
+            <summary>
+            Requirement placed on numeric parameter via the <see cref="M:Tekla.Structural.ExpressoAddIn.RequirementAttribute.#ctor(System.String,Tekla.Structural.ExpressoAddIn.Requirement)">Requirement Attribute</see>
+            </summary>
+        </member>
+        <member name="F:Tekla.Structural.ExpressoAddIn.Requirement.Negative">
+            <summary>
+            Numeric parameter must be negative
+            </summary>
+        </member>
+        <member name="F:Tekla.Structural.ExpressoAddIn.Requirement.NonZeroNegative">
+            <summary>
+            Numeric parameter must be non-zero and negative
+            </summary>
+        </member>
+        <member name="F:Tekla.Structural.ExpressoAddIn.Requirement.NonZero">
+            <summary>
+            Numeric parameter must be non-zero
+            </summary>
+        </member>
+        <member name="F:Tekla.Structural.ExpressoAddIn.Requirement.NonZeroPositive">
+            <summary>
+            Numeric parameter must be non-zero and positive
+            </summary>
+        </member>
+        <member name="F:Tekla.Structural.ExpressoAddIn.Requirement.Positive">
+            <summary>
+            Numeric parameter must be positive
+            </summary>
+        </member>
+        <member name="T:Tekla.Structural.ExpressoAddIn.FieldOutput">
+            <exclude/>
+            <summary>
+            Use this enum to map the field result to an ExprOutputType
+            </summary>
+        </member>
+        <member name="T:Tekla.Structural.ExpressoAddIn.RequirementAttribute">
+            <summary>
+            Requirements can be placed on input parameters by using the Requirement Attribute.
+            These requirements will be evaluated before the method is called and if a requirement fails the method call will fail.
+            </summary>
+        </member>
+        <member name="M:Tekla.Structural.ExpressoAddIn.RequirementAttribute.#ctor(System.String,Tekla.Structural.ExpressoAddIn.Requirement)">
+            <summary>
+            Place a requirement on a numeric input parameter
+            </summary>
+            <param name="errorMessage">Message to show if the requirement is not met</param>
+            <param name="requirement"><see cref="T:Tekla.Structural.ExpressoAddIn.Requirement"/> for a numeric parameter</param>
+        </member>
+        <member name="M:Tekla.Structural.ExpressoAddIn.RequirementAttribute.#ctor(System.String,System.Double,System.Double)">
+            <summary>
+            Place a requirement on a numeric input parameter
+            </summary>
+            <param name="errorMessage">Message to show if the requirement is not met</param>
+            <param name="min">Minimum valid value for a numeric parameter</param>
+            <param name="max">Maximum valid value for a numeric parameter</param>
+        </member>
+        <member name="M:Tekla.Structural.ExpressoAddIn.RequirementAttribute.#ctor(System.String,System.Char[])">
+            <summary>
+            Place a requirement on a string input parameter
+            </summary>
+            <param name="errorMessage">Message to show if the requirement is not met</param>
+            <param name="invalidChars">Invalid characters not permitted in string parameter</param>
+        </member>
+        <member name="T:Tekla.Structural.ExpressoAddIn.AliasAttribute">
+            <summary>
+            Register method with Tedds with an additional name
+            </summary>
+        </member>
+        <member name="M:Tekla.Structural.ExpressoAddIn.AliasAttribute.#ctor(System.String)">
+            <summary>
+            Register method with Tedds with an additional name
+            </summary>
+            <param name="alias">Additional name to register method in Tedds with</param>
+        </member>
+        <member name="M:Tekla.Structural.ExpressoAddIn.AliasAttribute.#ctor(System.String,System.Boolean)">
+            <summary>
+            Register method with Tedds with an additional name
+            </summary>
+            <param name="alias">Additional name to register method in Tedds with</param>
+            <param name="aliasOnly">Only register the method against the alias</param>
+        </member>
+        <member name="T:Tekla.Structural.ExpressoAddIn.UnitsAttribute">
+            <summary>
+            Because Tedds calculations are ‘dimensionally aware’ Add-In methods must specify the units of each argument, and the units of any return value.
+            This is done using the Units Attribute.
+            </summary>
+            <remarks>
+            For numerical input parameters, Tedds will first verify that the argument passed in to the method has the correct dimensions for the specified units.
+            For example, if the parameter has a Units attribute of “m”, any length value (e.g. feet or millimetres) could be passed to the method.
+            If a numerical parameter does not have a units attribute then the argument passed in must be dimensionless.
+            Once dimensional equality has been verified Tedds will divide the argument passed to the method by the factor and units to create a dimensionless value which will be passed into the .Net method.
+            For example, if you pass a value of 1 foot into a method that has been decorated with a Units Attribute of 10 millimetres [UnitsAttribute(10, “mm”)] then the .Net method will receive the value 30.48.
+            For return values, Tedds will multiply the return value by the factor and units to create a dimensioned value which can be used in subsequent Tedds calculations.
+            </remarks>
+        </member>
+        <member name="M:Tekla.Structural.ExpressoAddIn.UnitsAttribute.#ctor(System.String)">
+            <summary>
+            Units of variable passed into/out of Tedds
+            </summary>
+            <param name="unit">The unit to apply</param>
+            <example>“m” or “kN”</example>
+        </member>
+        <member name="M:Tekla.Structural.ExpressoAddIn.UnitsAttribute.#ctor(System.Double,System.String)">
+            <summary>
+            Units of variable passed into/out of Tedds
+            </summary>
+            <param name="unit">The unit to apply</param>
+            <param name="factor">The conversion factor to apply</param>
+        </member>
+        <member name="T:Tekla.Structural.ExpressoAddIn.ValidTypesAttribute">
+            <summary>
+            Valid types to allow within a dynamic/object parameter
+            </summary>
+            <remarks>
+            It is common within the .Net framework to have index properties that use different data types for keys.
+            For example a value in a collection can be accessed by index or name (int or string).
+            The ValidTypes Attribute allows a single Add-In method to accept multiple data types (by declaring the parameter as an object or dynamic type) and then inform Tedds how to pass the argument to that method.
+            In the name/index example, valid types of int and string would be specified in the attribute.
+            Tedds would then pass string variables to the method as a string but cast numeric variables from double to int before calling the method.
+            </remarks>
+        </member>
+        <member name="M:Tekla.Structural.ExpressoAddIn.ValidTypesAttribute.#ctor(System.Type[])">
+            <summary>
+            Specify valid types to pass within parameter
+            </summary>
+            <param name="types">Valid types</param>
+        </member>
+        <member name="T:Tekla.Structural.ExpressoAddIn.FieldAttribute">
+            <exclude/>
+            <summary>
+            Mark function as a Tedds Field
+            </summary>
+        </member>
+        <member name="M:Tekla.Structural.ExpressoAddIn.FieldAttribute.#ctor(Tekla.Structural.ExpressoAddIn.FieldOutput,System.Boolean)">
+            <summary>
+            Register method with Tedds as a field rather than a function
+            </summary>
+            <param name="output">Type of output generated by field</param>
+            <param name="generateFunction">Generate a Tedds function as well as a field</param>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.ExpressoCache`1">
+            <exclude/>
+            <summary>
+            A cache where the contents live for the duration of one expresso instance. The key used is the expresso instance handle
+            </summary>
+            <typeparam name="TValue">The type of value contained in the cache</typeparam>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.ExpressoCache`2">
+            <exclude/>
+            <summary>
+            Base class for a key/value cache, the contents live for the duration of one expresso instance
+            </summary>
+            <typeparam name="TKey">The type of key contained in the cache</typeparam>
+            <typeparam name="TValue">The type of value contained in the cache</typeparam>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.ExpressoCache">
+            <exclude/>
+            <summary>
+            Base abstract class for a cache, the contents live for the duration of one expresso instance
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.IExpressoCacheEntry`2">
+            <exclude/>
+            <summary>
+            Interface for entries stored in the ExpressoCache
+            </summary>
+            <typeparam name="TKey">The type of key contained in the cache</typeparam>
+            <typeparam name="TValue">The type of value contained in the cache</typeparam>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.ExprInputControl">
+            <exclude/>
+            <summary>
+            Base class for an input control with an associated expresso instance
+            </summary>
+        </member>
+        <member name="F:CSCWorld.Tedds.ExprInterop.ExprInputControl.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:CSCWorld.Tedds.ExprInterop.ExprInputControl.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:CSCWorld.Tedds.ExprInterop.ExprInputControl.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.IExprInputDataViewControl">
+            <exclude/>
+            <summary>
+            Interface for accessing the properties in the DataViewControl contained in a ExprInputDataViewControl
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.ExprInputDataViewControl">
+            <exclude/>
+            <summary>
+            An expresso input control with a DataViewControl in a splitter panel
+            </summary>
+        </member>
+        <member name="F:CSCWorld.Tedds.ExprInterop.ExprInputDataViewControl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:CSCWorld.Tedds.ExprInterop.ExprInputDataViewControl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:CSCWorld.Tedds.ExprInterop.ExprInputDataViewControl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.ExprInputDrawControl">
+            <exclude/>
+            <summary>
+            Base class for a drawing control with an associated expresso instance
+            </summary>
+        </member>
+        <member name="F:CSCWorld.Tedds.ExprInterop.ExprInputDrawControl.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:CSCWorld.Tedds.ExprInterop.ExprInputDrawControl.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:CSCWorld.Tedds.ExprInterop.ExprInputDrawControl.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.IExprInputDrawControl">
+            <exclude/>
+            <summary>
+            Interface for a drawing control with an associated expresso instance
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.ExpressoMethodType">
+            <exclude/>
+            <summary>
+            Enum for expresso field and function types
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.InteropError">
+            <exclude/>
+            <summary>
+            Interop error codes (Corresponds to ExprErrs.h)
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.TeddsException">
+            <exclude/>
+            <summary>
+            Tedds application exception with an associated Tedds error code
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.ExprInteropLoader">
+            <exclude/>
+            <summary>
+            COM visible class for the expresso interop loader
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.ExpressoEventArgs">
+            <exclude/>
+            <summary>
+            Event arguments where the event has an associated expresso instance
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.IExprInteropLoader">
+            <exclude/>
+            <summary>
+            COM visible interface for the expresso interop loaded
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.IExprUndoManager">
+            <exclude/>
+            <summary>
+            Interface for an undo manager that can save and restore state for an associated expresso instance
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.ExprUndoManager`1">
+            <exclude/>
+            <summary>
+            Base implementation of the IExprUndoManager interface
+            </summary>
+            <typeparam name="TValue"></typeparam>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.ExprUndoAttribute">
+            <exclude/>
+            <summary>
+            Attribute for 
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.IExprValueExtensions">
+            <exclude/>
+            <summary>
+            Extension methods for the IExprValue type
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.DispID_IExprInputControl">
+            <exclude/>
+            <summary>
+            COM dispatch ID's for the IExprInputControl interface
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.IExprInputControl">
+            <exclude/>
+            <summary>
+            COM visible interface for the expresso input control
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.IExprInputControlEvents">
+            <exclude/>
+            <summary>
+            COM visible event interface for the expresso input control
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.InfoChangedHandler">
+            <exclude/>
+            <summary>
+            Managed implementation signature of the InfoChanged event
+            </summary>
+            <param name="information">The information string</param>
+            <param name="isExpression">Whether the information string is an expression</param>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.IExprInputControlImpl">
+            <exclude/>
+            <summary>
+            Implementation interface for the expresso input control
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.NativeHost">
+            <exclude/>
+            <summary>
+            Static class for managing CreateParams for controls hosted in a native client
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.NativeHostDataGridView">
+            <exclude/>
+            <summary>
+            A DataGridView control initialised for hosting in a native client
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.NativeHostTabControl">
+            <exclude/>
+            <summary>
+            A TabControl initialised for hosting in a native client
+            </summary>
+        </member>
+        <member name="T:CSCWorld.Tedds.ExprInterop.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:CSCWorld.Tedds.ExprInterop.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:CSCWorld.Tedds.ExprInterop.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:CSCWorld.Tedds.ExprInterop.Properties.Resources.Horizontal_16x">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:CSCWorld.Tedds.ExprInterop.Properties.Resources.Vertical_16x">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+    </members>
+</doc>

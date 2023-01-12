@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tekla.Structures.WebBrowser</name>
+    </assembly>
+    <members>
+        <member name="T:Tekla.Structures.WebBrowser.CefSharpWrapper">
+            <summary>
+            Class that is a wrapper for CefSharp methods and UI element. Implements generic interface.
+            </summary>
+        </member>
+        <member name="M:Tekla.Structures.WebBrowser.CefSharpWrapper.#ctor(System.String,Tekla.Structures.WebBrowser.Handlers.HandlersParameters)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tekla.Structures.WebBrowser.CefSharpWrapper"/> class.
+            </summary>
+            <param name="address">Website to load first.</param>
+            <param name="handlersParams">Handlers parameters.</param>
+        </member>
+        <member name="P:Tekla.Structures.WebBrowser.CefSharpWrapper.Browser">
+            <inheritdoc />
+        </member>
+        <member name="M:Tekla.Structures.WebBrowser.CefSharpWrapper.RegisterJsObject(System.String,System.Object,System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tekla.Structures.WebBrowser.CefSharpWrapper.ExecuteJsScriptAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tekla.Structures.WebBrowser.CefSharpWrapper.ShowDevTools">
+            <inheritdoc />
+        </member>
+        <member name="M:Tekla.Structures.WebBrowser.CefSharpWrapper.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:Tekla.Structures.WebBrowser.CefSharpWrapper.Dispose(System.Boolean)">
+            <summary>
+            Calls dispose on managed objects.
+            </summary>
+            <param name="disposing">Dispose managed objects.</param>
+        </member>
+        <member name="T:Tekla.Structures.WebBrowser.Handlers.DownloadHandler">
+            <summary>
+            Class used to handle file downloads.
+            </summary>
+        </member>
+        <member name="M:Tekla.Structures.WebBrowser.Handlers.DownloadHandler.#ctor(System.Boolean)">
+            <summary>
+             Initializes a new instance of the <see cref="T:Tekla.Structures.WebBrowser.Handlers.DownloadHandler"/> class.
+            </summary>
+            <param name="showFileSaveDialog">If save file dialog is shown.</param>
+        </member>
+        <member name="M:Tekla.Structures.WebBrowser.Handlers.DownloadHandler.OnBeforeDownload(CefSharp.IWebBrowser,CefSharp.IBrowser,CefSharp.DownloadItem,CefSharp.IBeforeDownloadCallback)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tekla.Structures.WebBrowser.Handlers.DownloadHandler.OnDownloadUpdated(CefSharp.IWebBrowser,CefSharp.IBrowser,CefSharp.DownloadItem,CefSharp.IDownloadItemCallback)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tekla.Structures.WebBrowser.Handlers.HandlersParameters">
+            <summary>
+            Parameter class for browser handlers.
+            </summary>
+        </member>
+        <member name="P:Tekla.Structures.WebBrowser.Handlers.HandlersParameters.attachDownloadHandler">
+            <summary>
+            If Download handler needs to be attached.
+            </summary>
+        </member>
+        <member name="P:Tekla.Structures.WebBrowser.Handlers.HandlersParameters.showDialogDownloadHandler">
+            <summary>
+            If save file dialog needs to be shown in Download handler.
+            </summary>
+        </member>
+        <member name="T:Tekla.Structures.WebBrowser.IBrowser">
+            <summary>
+            Interface to wrap the web browser.
+            </summary>
+        </member>
+        <member name="P:Tekla.Structures.WebBrowser.IBrowser.Browser">
+            <summary>
+            Gets the FrameWorkElement which contains the browser.
+            </summary>
+        </member>
+        <member name="M:Tekla.Structures.WebBrowser.IBrowser.RegisterJsObject(System.String,System.Object,System.Boolean)">
+            <summary>
+            Register an object for binding in Javascript.
+            </summary>
+            <param name="name">The name of the object.</param>
+            <param name="objectToBind">The object that will be bound in Javascript.</param>
+            <param name="isAsync">If true the object will be registered for async communication.</param>
+        </member>
+        <member name="M:Tekla.Structures.WebBrowser.IBrowser.ExecuteJsScriptAsync(System.String)">
+            <summary>
+            Executes Javascript script asynchronously.
+            </summary>
+            <param name="script">The script to execute.</param>
+        </member>
+        <member name="M:Tekla.Structures.WebBrowser.IBrowser.ShowDevTools">
+            <summary>
+            Show the developer tools of the browser.
+            </summary>
+        </member>
+        <member name="T:Tekla.Structures.WebBrowser.WebBrowserFactory">
+            <summary>
+            Factory class for creating web browser instances.
+            </summary>
+        </member>
+        <member name="P:Tekla.Structures.WebBrowser.WebBrowserFactory.GetCurrentProcessName">
+            <summary>
+            Gets or sets the method that gets current process name.
+            </summary>
+        </member>
+        <member name="M:Tekla.Structures.WebBrowser.WebBrowserFactory.CreateWebBrowserInstance(System.String,Tekla.Structures.WebBrowser.Handlers.HandlersParameters)">
+            <summary>
+            Creates instance of CefSharp wrapper object that implements generic browser-independent interface.
+            </summary>
+            <param name="address">Website to load first.</param>
+            <param name="handlersParams">Handlers parameters. Passing null means no handlers will be attached.</param>
+            <returns>CefSharp wrapper object.</returns>
+        </member>
+    </members>
+</doc>
