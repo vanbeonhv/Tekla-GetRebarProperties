@@ -693,13 +693,10 @@
         </member>
         <member name="T:Tekla.Structures.Plugins.CustomPartPositioningTypeAttribute">
             <summary>
-            The CustomPartInputTypeAttribute class is used for defining the input type.
-            Based on the type the system will then position the custom part either based on calculated
-            extrema center point or given input points.
-            
-            The attribute is initialized from the custom attribute i.e.
-                [CustomPartPositioningType((CustomPartBase.CustomPartPositioningType.POSITIONING_BY_INPUTPOINTS)] 
-            in the custom part source code.
+            The CustomPartPositioningTypeAttribute class is used for defining the positioning type for custom part.
+            The attribute is initialized from the custom attribute 
+                [CustomPartPositioningTypeAttribute(CustomPartBase.CustomPartPositioningType.POSITIONING_BY_EXTREMA)] 
+            in the custom part source.
             </summary>
         </member>
         <member name="M:Tekla.Structures.Plugins.CustomPartPositioningTypeAttribute.#ctor(Tekla.Structures.Plugins.CustomPartBase.CustomPartPositioningType)">
@@ -1430,29 +1427,6 @@
             </summary>
             <param name="Type">The type of the input object dependency as an integer.</param>
         </member>
-        <member name="T:Tekla.Structures.Plugins.PluginPropertyFileLocationAttribute">
-            <summary>Used to specify file location for a property file.</summary>
-        </member>
-        <member name="M:Tekla.Structures.Plugins.PluginPropertyFileLocationAttribute.#ctor(System.String,System.String)">
-            <summary>Initializes a new instance of the <see cref="T:Tekla.Structures.Plugins.PluginPropertyFileLocationAttribute"/> class, for a file with provided filename suffix.</summary>
-            <param name="suffix">File suffix to register. Must contain the dot, such as ".ExamplePlugin.Data.txt". Should be as specific as possible.</param>
-            <param name="subdirectory">The model folder subdirectory where the attribute should be searched for.</param>
-             Currently supported values for <c>subdirectory</c> are:
-            <list type="bullet">
-                <item>
-                    <description>"" - the file is located in the model folder.</description>
-                </item>
-                <item>
-                    <description>"attributes" - the file is located in the model folder's "attributes" subfolder.</description>
-                </item>
-            </list>
-        </member>
-        <member name="P:Tekla.Structures.Plugins.PluginPropertyFileLocationAttribute.Suffix">
-            <summary>Gets the property file suffix.</summary>
-        </member>
-        <member name="P:Tekla.Structures.Plugins.PluginPropertyFileLocationAttribute.Subdirectory">
-            <summary>Gets the property file subdirectory in a model folder.</summary>
-        </member>
         <member name="T:Tekla.Structures.Internal.ConnectionHelper">
             <summary>
             DO NOT USE! For internal usage only!
@@ -2008,14 +1982,6 @@
             <param name="pluginFormFullName">Complete name of the plugins form, null if it does not have one.</param>
             <returns>true if the name has been found, otherwise false</returns>
         </member>
-        <member name="M:Tekla.Structures.Internal.Plugins.GetPluginNameFromFormFullName(System.String,System.String@)">
-            <summary>
-            Gets the complete name of the PluginForm of the Plugin.
-            </summary>
-            <param name="pluginName">Name of the plugin.</param>
-            <param name="pluginFormFullName">Complete name of the plugins form, null if it does not have one.</param>
-            <returns>true if the name has been found, otherwise false</returns>
-        </member>
         <member name="M:Tekla.Structures.Internal.Plugins.GetPluginBaseDirectory">
             <summary>
             Retrieves the path to the Plugin folder which resides beneath TeklaStructures folder.
@@ -2034,13 +2000,6 @@
             </summary>
             <param name="pluginName">The name of the plugin.</param>
             <returns>True if the plugin is a drawing plugin otherwise false</returns>
-        </member>
-        <member name="M:Tekla.Structures.Internal.Plugins.IsConnectionPlugin(System.String)">
-            <summary>
-            Checks if the plugin defined by the given PluginName is a connection plugin or not.
-            </summary>
-            <param name="pluginName">The name of the plugin.</param>
-            <returns>True if the plugin is a connection plugin otherwise false</returns>
         </member>
         <member name="M:Tekla.Structures.Internal.Plugins.SetAssemblyResolver">
             <summary>
@@ -2461,11 +2420,6 @@
         <member name="M:Tekla.Structures.Internal.StructuresPluginDescriptor.ToString">
             <exclude />
         </member>
-        <member name="T:Tekla.Structures.Internal.StructuresMetadataLoader">
-            <Summary>
-             Structures MetadataLoader class
-            </Summary>
-        </member>
         <member name="T:Tekla.Structures.PluginsInternal.CDelegate">
             <summary>
             CDelegate includes all the platform invoke commands user process can call.
@@ -2676,23 +2630,14 @@
         <member name="M:Tekla.Structures.PluginsInternal.CDelegateWrapper.ExportSignalInputEnded">
             <exclude/>
         </member>
-        <member name="T:Tekla.Structures.PluginsInternal.GenericDelegateFake`1">
-            <summary>
-            Implements ICDelegate so that every method returns according to <see cref="T:Tekla.Structures.RemotingHelper.IReturnStrategy"/>
-            Can be used in unit testing to mock Tekla Structures behavior, by setting
-            a ICDelegate instance using <see cref="T:Tekla.Structures.TeklaStructuresInternal.CDelegateSetter" />.
-            </summary>
-        </member>
-        <member name="T:Tekla.Structures.PluginsInternal.DelegateFake">
-            <summary>
-            Implements ICDelegate so that every method throws NotImplementedException.
-            Can be used in unit testing to mock Tekla Structures behavior, by setting
-            a ICDelegate instance using <see cref="T:Tekla.Structures.TeklaStructuresInternal.CDelegateSetter" />.
-            </summary>
-        </member>
         <member name="T:Tekla.Structures.PluginsInternal.DelegateProxy">
             <summary>
             CDelegate remote class proxy.
+            </summary>
+        </member>
+        <member name="F:Tekla.Structures.PluginsInternal.DelegateProxy._Instance">
+            <summary>
+            The remote delegate object.
             </summary>
         </member>
         <member name="M:Tekla.Structures.PluginsInternal.DelegateProxy.#cctor">
@@ -2704,13 +2649,6 @@
             <summary>
             Gets the singleton CDelegate instance that includes model API methods.
             </summary>
-        </member>
-        <member name="M:Tekla.Structures.PluginsInternal.DelegateProxy.DeactivateInterface(System.String)">
-            <summary>
-            Deactivate Tekla.Structures.Model interface
-            </summary>
-            <param name="Param"></param>
-            <returns></returns>
         </member>
         <member name="T:Tekla.Structures.PluginsInternal.ICDelegate">
             <exclude/>

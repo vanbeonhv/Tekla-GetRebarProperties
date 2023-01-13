@@ -36,9 +36,10 @@ namespace Get_Rebar_Length
             InitializeComponent();
         }
 
+        private BindingList<RebarDetail> rebarDetails = new BindingList<RebarDetail> { };
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            List<RebarDetail> rebarDetails = new List<RebarDetail> { };
             dataGridView1.DataSource = rebarDetails;
             dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
@@ -60,9 +61,7 @@ namespace Get_Rebar_Length
                         ArrayList propsS = new ArrayList();
                         ArrayList propsD = new ArrayList();
                         ArrayList propsI = new ArrayList();
-                        Hashtable hashtable = new Hashtable();
                         propsS.Add("NAME");
-                        propsD.Add("LENGTH");
                         propsD.Add("LENGTH");
 
                         do
@@ -70,18 +69,26 @@ namespace Get_Rebar_Length
                             Picker picker = new Picker();
                             ModelObject myEnum = picker.PickObject(Picker.PickObjectEnum.PICK_ONE_REINFORCEMENT, "pick something");
                             RebarGroup rebar = myEnum as RebarGroup;
+                            Hashtable hashtable = new Hashtable();
                             rebar.GetAllReportProperties(propsS, propsD, propsI, ref hashtable);
                             foreach (string key in hashtable.Keys)
                             {
-                                Console.WriteLine(String.Format("{0}: {1}", key, hashtable[key]));
-                                //rebarDetails.Add(new RebarDetail() { rebarName = "Name", rebarLength = 0 });
+                                //Console.WriteLine(String.Format("{0}: {1}", key, hashtable[key]));
+                                rebarDetails.Add(new RebarDetail() { rebarName = (string)hashtable["NAME"], rebarLength = (double)hashtable["LENGTH"] });
+                                //(double)hashtable[key]
                             }
+                            foreach (var value in hashtable.Values)
+                            {
+                                Console.WriteLine(value + "");
+                            }
+                            dataGridView1.Refresh();
                         } while (isPicking);
                     }
                     catch (Exception)
                     {
                         isPicking = false;
                     }
+                    Console.WriteLine(isPicking.ToString());
                 }
             }
             catch (Exception ex)
